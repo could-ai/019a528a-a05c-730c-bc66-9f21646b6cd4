@@ -39,7 +39,12 @@ class _EnglishSpeakingPageState extends State<EnglishSpeakingPage> {
     "Can I have the bill, please?",
     "The weather is beautiful today.",
     "I enjoy listening to music.",
-    "Flutter is an amazing framework for building apps."
+    "Flutter is an amazing framework for building apps.",
+    "What time is it?",
+    "I'm sorry, I don't understand.",
+    "Could you repeat that, please?",
+    "Have a great day!",
+    "Practice makes perfect."
   ];
 
   int _currentIndex = 0;
@@ -68,34 +73,54 @@ class _EnglishSpeakingPageState extends State<EnglishSpeakingPage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(24.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Expanded(
-              child: Center(
-                child: Text(
-                  _sentences[_currentIndex],
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.headlineMedium,
+              child: Card(
+                elevation: 4.0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15.0),
+                ),
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Text(
+                      _sentences[_currentIndex],
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ),
+            const SizedBox(height: 20),
+            Text(
+              'Sentence ${_currentIndex + 1} of ${_sentences.length}',
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+            const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                ElevatedButton(
+                ElevatedButton.icon(
                   onPressed: _currentIndex > 0 ? _previousSentence : null,
-                  child: const Text('Previous'),
+                  icon: const Icon(Icons.arrow_back),
+                  label: const Text('Previous'),
                 ),
-                ElevatedButton(
+                ElevatedButton.icon(
                   onPressed: _currentIndex < _sentences.length - 1 ? _nextSentence : null,
-                  child: const Text('Next'),
+                  icon: const Icon(Icons.arrow_forward),
+                  label: const Text('Next'),
                 ),
               ],
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 30),
             ElevatedButton.icon(
               onPressed: () {
                 // Placeholder for listen functionality
@@ -104,21 +129,25 @@ class _EnglishSpeakingPageState extends State<EnglishSpeakingPage> {
                 );
               },
               icon: const Icon(Icons.volume_up),
-              label: const Text('Listen'),
+              label: const Text('Listen to Pronunciation'),
               style: ElevatedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(vertical: 15),
+                textStyle: const TextStyle(fontSize: 16),
               ),
             ),
             const SizedBox(height: 10),
-            OutlinedButton(
+            ElevatedButton.icon(
               onPressed: () {
                  ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text('Great job! Keep practicing.')),
                 );
               },
-              child: const Text("I've practiced"),
-               style: OutlinedButton.styleFrom(
+              icon: const Icon(Icons.check_circle_outline),
+              label: const Text("I've Practiced This"),
+               style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.green[100],
                 padding: const EdgeInsets.symmetric(vertical: 15),
+                textStyle: const TextStyle(fontSize: 16),
               ),
             ),
           ],
